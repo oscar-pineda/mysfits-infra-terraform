@@ -1,5 +1,6 @@
 variable "region" {}
 variable "env" {}
+variable "port" {}
 variable "ami_id" {}
 variable "instance_type" {}
 variable "key_name" {

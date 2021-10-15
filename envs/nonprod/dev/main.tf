@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  # backend "s3" {}
+  backend "s3" {}
 }
 
 provider "aws" {
@@ -26,8 +26,8 @@ module "common_data" {
 module "target_group" {
   source = "../../../modules/target-group"
 
-  name         = "api-dev"
-  port         = 8000
+  name         = replace(var.subdomain, ".", "-")
+  port         = var.port
   vpc_id       = module.common_data.default_vpc_id
   listener_arn = var.lb_listener_arn
   host_headers = [local.app_dns]

@@ -1,5 +1,6 @@
-region               = "us-west-2"
+region               = "us-east-1"
 env                  = "develop"
+port                 = 8000
 ami_id               = "latest"
 instance_type        = "t2.micro"
 asg_min_size         = 1
