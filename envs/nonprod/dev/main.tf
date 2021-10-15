@@ -48,6 +48,7 @@ module "compute" {
   security_groups      = [var.sg_instance_id, var.sg_ssh_id]
   iam_instance_profile = var.instance_profile_name
   subnets              = module.common_data.default_subnet_ids
+  target_group_arns    = [module.target_group.tg_arn]
 }
 
 resource "aws_route53_record" "record" {

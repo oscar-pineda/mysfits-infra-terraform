@@ -17,6 +17,7 @@ resource "aws_autoscaling_group" "asg" {
   name                 = aws_launch_configuration.lc.name
   launch_configuration = aws_launch_configuration.lc.id
   vpc_zone_identifier  = var.subnets
+  target_group_arns    = var.target_group_arns
 
   min_size         = var.asg_min_size
   max_size         = var.asg_max_size
