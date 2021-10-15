@@ -5,9 +5,8 @@ resource "aws_lb_target_group" "tg" {
   vpc_id   = var.vpc_id
 }
 
-resource "aws_lb_listener_rule" "host_based_weighted_routing" {
+resource "aws_lb_listener_rule" "rule" {
   listener_arn = var.listener_arn
-  priority     = 99
 
   action {
     type             = "forward"
