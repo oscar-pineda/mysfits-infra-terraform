@@ -12,7 +12,7 @@ phases:
     commands:
       - wget https://releases.hashicorp.com/terraform/1.0.9/terraform_1.0.9_linux_amd64.zip
       - unzip terraform_1.0.9_linux_amd64.zip
-      - sudo mv terraform /usr/local/bin
+      - mv terraform /usr/local/bin
   build:
     commands:
       - cd envs/$ENV_CATEGORY/$ENV_NAME
