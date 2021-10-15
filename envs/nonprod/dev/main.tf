@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  backend "s3" {}
+  #  backend "s3" {}
 }
 
 provider "aws" {
@@ -59,5 +59,18 @@ resource "aws_route53_record" "record" {
     name                   = var.lb_dns_name
     zone_id                = var.lb_zone_id
     evaluate_target_health = false
+  }
+}
+
+resource "aws_codedeploy_deployment_group" "example" {
+  app_name              = var.codedeploy_app
+  deployment_group_name = var.env
+  service_role_arn      = var.codedeploy_service_role
+
+  autoscaling_groups = [module.compute.asg]
+
+  auto_rollback_configuration {
+    enabled = true
+    events  = ["DEPLOYMENT_FAILURE"]
   }
 }

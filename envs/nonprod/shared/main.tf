@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  backend "s3" {}
+  #backend "s3" {}
 }
 
 provider "aws" {
@@ -30,8 +30,12 @@ module "tls_cert" {
 module "loadbalancer" {
   source = "../../../modules/loadbalancer"
 
-  name            = "MysfitsAPINonProd"
+  name            = var.loadbalancer_name
   cert_arn        = module.tls_cert.cert_arn
   security_groups = [aws_security_group.load_balancer.id]
   subnets         = module.common_data.default_subnet_ids
+}
+
+resource "aws_codedeploy_app" "app" {
+  name = var.codedeploy_app_name
 }

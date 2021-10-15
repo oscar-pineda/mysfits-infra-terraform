@@ -25,3 +25,11 @@ output "lb_dns_name" {
 output "lb_zone_id" {
   value = module.loadbalancer.lb_zone_id
 }
+
+output "codedeploy_app" {
+  value = aws_codedeploy_app.app.name
+}
+
+output "codedeploy_service_role" {
+  value = aws_iam_role.codedeploy_role.arn
+}

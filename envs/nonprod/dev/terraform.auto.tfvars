@@ -7,4 +7,4 @@ asg_min_size         = 1
 asg_max_size         = 1
 asg_desired_capacity = 1
 domain_name          = "eloy.sre.mysfitsworkshop.com"
-subdomain            = "api.dev"
+subdomain            = "api-dev.nonprod"
