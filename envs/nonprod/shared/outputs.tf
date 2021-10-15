@@ -18,6 +18,10 @@ output "lb_listener_arn" {
   value = module.loadbalancer.lb_listener_arn
 }
 
-output "lb_dns" {
-  value = module.loadbalancer.lb_dns
+output "lb_dns_name" {
+  value = module.loadbalancer.lb_dns_name
+}
+
+output "lb_zone_id" {
+  value = module.loadbalancer.lb_zone_id
 }

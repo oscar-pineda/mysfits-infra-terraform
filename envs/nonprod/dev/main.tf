@@ -13,8 +13,24 @@ provider "aws" {
   region = var.region
 }
 
+locals {
+  app_dns = "${var.subdomain}.${var.domain_name}"
+}
+
 module "common_data" {
   source = "../../../modules/common-data"
+
+  domain_name = var.domain_name
+}
+
+module "target_group" {
+  source = "../../../modules/target-group"
+
+  name         = "api-dev"
+  port         = 8000
+  vpc_id       = module.common_data.default_vpc_id
+  listener_arn = var.lb_listener_arn
+  host_headers = [local.app_dns]
 }
 
 module "compute" {
@@ -34,6 +50,14 @@ module "compute" {
   subnets              = module.common_data.default_subnet_ids
 }
 
-output "data" {
-  value = module.common_data
+resource "aws_route53_record" "record" {
+  zone_id = module.common_data.route53_zone_id
+  name    = var.subdomain
+  type    = "A"
+
+  alias {
+    name                   = var.lb_dns_name
+    zone_id                = var.lb_zone_id
+    evaluate_target_health = false
+  }
 }
