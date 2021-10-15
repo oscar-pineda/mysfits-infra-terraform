@@ -1,37 +1,40 @@
-data "aws_iam_policy_document" "tust_policy_ec2" {
-  statement {
-    actions = ["sts:AssumeRole"]
+resource "aws_lb" "alb" {
+  name               = var.name
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = var.security_groups
+  subnets            = var.subnets
+}
 
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
     }
   }
 }
 
-resource "aws_iam_role" "instance_role" {
-  name_prefix        = "MysfitsAPIInstanceRole"
-  path               = "/"
-  assume_role_policy = data.aws_iam_policy_document.tust_policy_ec2.json
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = var.cert_arn
 
-  inline_policy {
-    name = "CodeDeployEC2Permissions"
+  default_action {
+    type = "fixed-response"
 
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Action   = ["s3:Get*", "s3:List*"]
-          Effect   = "Allow"
-          Resource = "*"
-        },
-      ]
-    })
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "Default rule"
+      status_code  = "200"
+    }
   }
-}
-
-
-resource "aws_iam_instance_profile" "ecs_instance_profile" {
-  name = aws_iam_role.instance_role.name
-  role = aws_iam_role.instance_role.name
 }

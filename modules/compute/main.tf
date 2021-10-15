@@ -3,10 +3,10 @@ resource "aws_launch_configuration" "lc" {
   name_prefix          = "mythicalapi"
   image_id             = var.ami_id
   instance_type        = var.instance_type
-  security_groups      = [aws_security_group.instance.id]
+  security_groups      = var.security_groups
   key_name             = var.key_name == "" ? null : var.key_name
   user_data            = templatefile("${path.module}/files/user-data.sh.tpl", { region = var.region })
-  iam_instance_profile = aws_iam_instance_profile.instance_profile.arn
+  iam_instance_profile = var.iam_instance_profile
 
   lifecycle {
     create_before_destroy = true

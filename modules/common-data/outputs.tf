@@ -13,3 +13,7 @@ output "azs" {
 output "default_subnet_ids" {
   value = [for s in aws_default_subnet.subnets : s.id]
 }
+
+output "route53_zone_id" {
+  value = data.aws_route53_zone.selected.zone_id
+}

@@ -7,6 +7,10 @@ variable "key_name" {}
 variable "asg_min_size" {}
 variable "asg_max_size" {}
 variable "asg_desired_capacity" {}
+variable "iam_instance_profile" {}
+variable "security_groups" {
+  type = list(any)
+}
 variable "subnets" {
   type = list(any)
 }

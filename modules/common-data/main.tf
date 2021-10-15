@@ -27,5 +27,8 @@ data "aws_availability_zones" "available" {
 resource "aws_default_subnet" "subnets" {
   count             = length(data.aws_availability_zones.available.names)
   availability_zone = element(data.aws_availability_zones.available.names, count.index)
+}
 
+data "aws_route53_zone" "selected" {
+  name = var.domain_name
 }

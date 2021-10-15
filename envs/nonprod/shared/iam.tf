@@ -1,3 +1,6 @@
+#--------------------------------------------------------------
+# Instance Role
+#--------------------------------------------------------------
 data "aws_iam_policy_document" "tust_policy_ec2" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -10,7 +13,7 @@ data "aws_iam_policy_document" "tust_policy_ec2" {
 }
 
 resource "aws_iam_role" "instance_role" {
-  name_prefix        = "MythicalAPIInstanceRole"
+  name_prefix        = "MythicalAPIInstanceRoleNonProd"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.tust_policy_ec2.json
 
