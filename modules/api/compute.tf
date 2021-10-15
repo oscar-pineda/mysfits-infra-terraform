@@ -16,7 +16,7 @@ resource "aws_launch_configuration" "lc" {
 resource "aws_autoscaling_group" "asg" {
   name                 = aws_launch_configuration.lc.name
   launch_configuration = aws_launch_configuration.lc.id
-  vpc_zone_identifier  = module.vpc.public_subnets
+  vpc_zone_identifier  = var.subnets
 
   min_size         = var.asg_min_size
   max_size         = var.asg_max_size
