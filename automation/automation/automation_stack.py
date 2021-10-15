@@ -15,7 +15,7 @@ class AutomationStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         config = {
-            "repo": {"owner": "eloyvega", "name": "mysfits-infra", "branch": "main"}
+            "repo": {"owner": "oscar-pineda", "name": "mysfits-infra-terraform", "branch": "main"}
         }
 
         terraform_state_bucket = s3.Bucket(
