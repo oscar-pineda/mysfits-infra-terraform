@@ -16,7 +16,8 @@ phases:
   build:
     commands:
       - cd envs/$ENV_CATEGORY/$ENV_NAME
-      - terraform init \
+      - |
+        terraform init \
         -backend-config="bucket=$STATE_BUCKET" \
         -backend-config="region=$STATE_BUCKET_REGION" \
         -backend-config="key=$ENV_CATEGORY/$ENV_NAME/terraform.tfstate"
